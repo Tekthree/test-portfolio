@@ -1,0 +1,90 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Dela Gothic One', cursive;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.container{
+  max-width: 1600px;
+  margin: 0 auto;
+  padding-left: 128px;
+  padding-right: 128px;
+  width: 100%;
+}
+
+
+
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+
+
+  .container{
+    padding-top: 32px;
+    padding-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+
+
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-left: 128px;
+    padding-right: 128px;
+
+
+    h2{
+      color: inherit;
+      font-size: 32px;
+  
+      span{
+        font-family:"Dela Gothic One";
+        color: rgb(103, 9, 211);
+      }
+  
+    }
+
+    nav{
+      display: grid;
+      grid-gap: 16px;
+      grid-template-columns: repeat(4,auto);
+
+      a{
+        color: inherit;
+        font-size: 20px;
+        text-decoration: none;
+
+      }
+    }
+  }  
+}
+
+main{
+  section.banner{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+
+
+    background-image: url('../img/team_hero_background.jpg');
+    background-position: center;
+    background-size: cover;
+
+    &:after{
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-color: rgb(77, 20, 124);
+    }
+  }
+}
