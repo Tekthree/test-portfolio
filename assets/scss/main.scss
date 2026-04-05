@@ -111,8 +111,8 @@ header{
 
     nav{
       display: grid;
-      grid-gap: 16px;
-      grid-template-columns: repeat(4,auto);
+      grid-gap: 12px;
+      grid-template-columns: repeat(5,auto);
 
       @media (max-width: 767px){
         display: none;
@@ -120,7 +120,7 @@ header{
 
       a{
         color: inherit;
-        font-size: 20px;
+        font-size: 15px;
         text-decoration: none;
 
       }
