@@ -4,24 +4,157 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
   <meta name="description" content="Tek Jones — Full-stack developer and designer based in Seattle. Custom websites, apps, branding, and Webflow builds for small businesses and brands.">
+  <meta name="author" content="Tek Jones">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Tek Jones | Full-Stack Developer & Designer">
+  <meta property="og:description" content="Full-stack development and design out of Seattle. 15+ years building websites, apps, and brands for businesses of all sizes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tekthree.github.io/test-portfolio/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tek Jones | Full-Stack Developer & Designer">
+  <meta name="twitter:description" content="Full-stack development and design out of Seattle. 15+ years building websites, apps, and brands.">
+
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/main.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    /* Hamburger button */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 200;
+    }
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #f3f3f3;
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+    /* Mobile nav overlay */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #1a0a29;
+      z-index: 100;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      color: #f3f3f3;
+      font-size: 32px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: 'Dela Gothic One', cursive;
+    }
+    .mobile-nav a:hover { color: #fffc67; }
+
+    @media (max-width: 767px) {
+      .hamburger { display: flex; }
+    }
+
+    /* Tech stack section */
+    .stack {
+      background: #f3f3f3;
+      padding: 80px 0;
+      text-align: center;
+    }
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 32px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .stack-tag {
+      background: #271041;
+      color: #fffc67;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* About section */
+    .about-btns { margin-top: 32px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .about-btns .button { margin-top: 0; }
+    .about-btns .btn-outline {
+      display: inline-block;
+      margin-top: 0;
+      color: #fffc67;
+      font-weight: 900;
+      text-decoration: none;
+      text-transform: uppercase;
+      border: 2px solid #fffc67;
+      padding: 18px 30px;
+      border-radius: 8px;
+      font-size: 20px;
+    }
+  </style>
+
   <title>Tek Jones | Full-Stack Developer & Designer</title>
 </head>
 <body>
+
+  <!-- Mobile nav overlay -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#" onclick="closeNav()">Home</a>
+    <a href="#services" onclick="closeNav()">Services</a>
+    <a href="#stack" onclick="closeNav()">Stack</a>
+    <a href="#projects" onclick="closeNav()">Projects</a>
+    <a href="#contact" onclick="closeNav()">Contact</a>
+  </nav>
+
   <header class="is-scrolling">
     <div class="container">
       <h2><span>TEKKY</span>JONES</h2>
       <nav>
           <a href="#">Home</a>
           <a href="#services">Services</a>
+          <a href="#stack">Stack</a>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
       </nav>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
+
   <main>
     <section class="banner">
       <div class="container">
@@ -35,15 +168,15 @@
       <iframe class='background3d' src='https://my.spline.design/librarygrogu-c57791ad17b7a6a81127f6abaaf25b62/' frameborder='0' width='100%' height='100%'></iframe>
     </section>
 
-    <section id="about" style="background:#271041; color:#f3f3f3; padding: 96px 0;">
+    <section id="about" style="background:#271041; color:#f3f3f3; padding:96px 0;">
       <div class="container" style="max-width:900px; text-align:center;">
         <h2 style="color:#fffc67;">About</h2>
         <p style="font-size:20px; font-weight:100; line-height:1.7; max-width:680px; margin:0 auto;">
-          I'm Tek Jones, a full-stack developer and designer with 15+ years building web solutions for businesses of all sizes. Air Force vet, Code Fellows alum, and solo operator behind Pixel Jones. I handle everything from branding to deployed app, so you're not bouncing between a designer and a developer — it's just me, start to finish.
+          I'm Tek Jones, a full-stack developer and designer with 15+ years building web solutions for businesses of all sizes. Air Force vet, Code Fellows alum, solo operator behind Pixel Jones. I handle everything from branding to deployed app, so you deal with one person the whole way through.
         </p>
-        <div style="margin-top:32px;">
+        <div class="about-btns">
           <a href="#contact" class="button">Work with me</a>
-          <a href="https://github.com/Tekthree" class="button" style="margin-left:16px; background:#fffc67;">GitHub</a>
+          <a href="https://github.com/Tekthree" class="btn-outline" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
     </section>
@@ -97,6 +230,28 @@
       </div>
     </section>
 
+    <section id="stack" class="stack">
+      <div class="container">
+        <h2>Tech Stack</h2>
+        <div class="stack-tags">
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">Next.js</span>
+          <span class="stack-tag">JavaScript</span>
+          <span class="stack-tag">TypeScript</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Tailwind CSS</span>
+          <span class="stack-tag">HTML / CSS</span>
+          <span class="stack-tag">Supabase</span>
+          <span class="stack-tag">MongoDB</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">Webflow</span>
+          <span class="stack-tag">WordPress</span>
+          <span class="stack-tag">Figma</span>
+          <span class="stack-tag">Adobe Creative Suite</span>
+        </div>
+      </div>
+    </section>
+
     <section class="projects" id="projects">
       <div class="container">
         <h2>Projects</h2>
@@ -131,7 +286,7 @@
             <div class="content">
               <h3>Shameless Productions</h3>
               <p>Event brand site for a Seattle-based collective. Covers shows, artists, and ticket sales.</p>
-              <a href="https://simplyshameless.com" class="button">View site</a>
+              <a href="https://simplyshameless.com" class="button" target="_blank" rel="noopener">View site</a>
             </div>
           </div>
 
@@ -156,12 +311,11 @@
       </div>
     </section>
 
-
     <section class="contact" id="contact">
       <div class="container">
         <h2>Contact</h2>
 
-        <form action="mailto:Tekthree@gmail.com" method="GET">
+        <form action="mailto:Tekthree@gmail.com" method="GET" enctype="text/plain">
           <div class="form-grid">
             <input type="text" name="name" id="name" placeholder="Name" class="form-element"/>
             <input type="email" name="email" id="email" placeholder="Email" class="form-element"/>
@@ -182,12 +336,29 @@
           &copy; 2026 Tek Jones &nbsp;&bull;&nbsp;
           <a href="mailto:Tekthree@gmail.com" style="color:#fffc67; text-decoration:none;">Tekthree@gmail.com</a>
           &nbsp;&bull;&nbsp;
-          <a href="https://github.com/Tekthree" style="color:#fffc67; text-decoration:none;">GitHub</a>
+          <a href="https://github.com/Tekthree" style="color:#fffc67; text-decoration:none;" target="_blank" rel="noopener">GitHub</a>
         </p>
       </div>
     </footer>
 
   </main>
+
   <script src="./assets/js/main.js"></script>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+
+    function closeNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  </script>
 </body>
 </html>
