@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tek Jones — Full-stack developer and designer based in Seattle. Custom websites, apps, branding, and Webflow builds for small businesses and brands.">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Roboto:wght@100;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/main.css">
-  <title>Tek's Portfolio</title>
+  <title>Tek Jones | Full-Stack Developer & Designer</title>
 </head>
 <body>
   <header class="is-scrolling">
@@ -15,9 +16,9 @@
       <h2><span>TEKKY</span>JONES</h2>
       <nav>
           <a href="#">Home</a>
-          <a href="#">Services</a>
-          <a href="#">Projects</a>
-          <a href="#">Contact</a>
+          <a href="#services">Services</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -28,75 +29,81 @@
           Websites you're <br class="hide-mob"/>
           <span>Not Scared </span>to share
         </h1>
-        <h3>Website solutions for all your needs</h3>
-        <a href="#" class="button">Find out more</a>
+        <h3>Full-stack development and design out of Seattle</h3>
+        <a href="#services" class="button">See what I do</a>
       </div>
       <iframe class='background3d' src='https://my.spline.design/librarygrogu-c57791ad17b7a6a81127f6abaaf25b62/' frameborder='0' width='100%' height='100%'></iframe>
     </section>
 
-    <section class="services" class="services">
+    <section id="about" style="background:#271041; color:#f3f3f3; padding: 96px 0;">
+      <div class="container" style="max-width:900px; text-align:center;">
+        <h2 style="color:#fffc67;">About</h2>
+        <p style="font-size:20px; font-weight:100; line-height:1.7; max-width:680px; margin:0 auto;">
+          I'm Tek Jones, a full-stack developer and designer with 15+ years building web solutions for businesses of all sizes. Air Force vet, Code Fellows alum, and solo operator behind Pixel Jones. I handle everything from branding to deployed app, so you're not bouncing between a designer and a developer — it's just me, start to finish.
+        </p>
+        <div style="margin-top:32px;">
+          <a href="#contact" class="button">Work with me</a>
+          <a href="https://github.com/Tekthree" class="button" style="margin-left:16px; background:#fffc67;">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="services">
       <div class="container">
-        <h2>
-          Services
-          
-        </h2>
+        <h2>Services</h2>
         <div class="services-grid">
-            
+
           <div class="services">
             <figure class="img-box">
-              <img src="./assets/img/greenworks_postcard_back.jpg" alt="" class="img">
+              <img src="./assets/img/greenworks_postcard_back.jpg" alt="Website design sample" class="img">
             </figure>
             <div class="content">
               <h3>Websites</h3>
               <p>Custom websites for small businesses and brands. Built to look sharp and convert visitors into clients.</p>
             </div>
-            
           </div>
 
           <div class="services">
             <figure class="img-box">
-              <img src="./assets/img/plunk.jpg" alt="" class="img">
+              <img src="./assets/img/plunk.jpg" alt="App development sample" class="img">
             </figure>
             <div class="content">
               <h3>Apps</h3>
               <p>Full-stack web apps using React and Next.js. From dashboards to data-driven tools built to scale.</p>
             </div>
-            
           </div>
 
           <div class="services">
             <figure class="img-box">
-              <img src="./assets/img/siriusmockup.jpg" alt="" class="img">
+              <img src="./assets/img/siriusmockup.jpg" alt="Branding and graphic design sample" class="img">
             </figure>
             <div class="content">
               <h3>Branding</h3>
               <p>Logos, identity systems, and event graphics. From first impression to full visual language.</p>
             </div>
-            
           </div>
 
           <div class="services">
             <figure class="img-box">
-              <img src="./assets/img/promo_package_the breakfast club.jpg" alt="" class="img">
+              <img src="./assets/img/promo_package_the breakfast club.jpg" alt="Webflow site sample" class="img">
             </figure>
             <div class="content">
               <h3>Webflow</h3>
               <p>Fast, polished Webflow sites for clients who need something live quickly without sacrificing quality.</p>
             </div>
-            
           </div>
-          
+
         </div>
       </div>
     </section>
 
     <section class="projects" id="projects">
-      <div class="container"> 
+      <div class="container">
         <h2>Projects</h2>
 
         <div class="projects-grid">
 
-          <div class="project">
+          <div class="project" style="background-image:url('./assets/img/team_hero_background.jpg')">
             <div class="content">
               <h3>Jo Hearts Hair</h3>
               <p>Hair extension salon site with booking integration, service pages, and a full client portal for ongoing updates.</p>
@@ -104,15 +111,15 @@
             </div>
           </div>
 
-          <div class="project">
+          <div class="project" style="background-image:url('./assets/img/siriusmockup.jpg')">
             <div class="content">
               <h3>The Rebel</h3>
-              <p>Bar and lounge website with event listings, press coverage, and a Google Business Profile management setup.</p>
+              <p>Bar and lounge website with event listings, press coverage, and Google Business Profile management.</p>
               <a href="#" class="button">Learn more</a>
             </div>
           </div>
 
-          <div class="project">
+          <div class="project" style="background-image:url('./assets/img/1.jpg')">
             <div class="content">
               <h3>Ink Therapy Tattoo</h3>
               <p>Tattoo studio site with artist profiles, service pages, and SEO-optimized content for local discovery.</p>
@@ -120,15 +127,15 @@
             </div>
           </div>
 
-          <div class="project">
+          <div class="project" style="background-image:url('./assets/img/promo_package_the%20breakfast%20club.jpg')">
             <div class="content">
               <h3>Shameless Productions</h3>
               <p>Event brand site for a Seattle-based collective. Covers shows, artists, and ticket sales.</p>
-              <a href="https://simplyshameless.com" class="button">Learn more</a>
+              <a href="https://simplyshameless.com" class="button">View site</a>
             </div>
           </div>
 
-          <div class="project">
+          <div class="project" style="background-image:url('./assets/img/greenworks_postcard_back.jpg')">
             <div class="content">
               <h3>Craig DeBolt Realty</h3>
               <p>Real estate portfolio site for a Seattle agent. Clean, professional, and built to generate leads.</p>
@@ -136,7 +143,7 @@
             </div>
           </div>
 
-          <div class="project">
+          <div class="project" style="background-image:url('./assets/img/plunk.jpg')">
             <div class="content">
               <h3>OkizooCrew</h3>
               <p>React migration for an online music community. Modernized the stack while keeping the community intact.</p>
@@ -146,34 +153,39 @@
 
         </div>
 
-        <div class="center">
-          <a href="" class="button">view more</a>
-        </div>
-        
       </div>
     </section>
 
 
     <section class="contact" id="contact">
-
       <div class="container">
         <h2>Contact</h2>
-        
-        <form action="">
+
+        <form action="mailto:Tekthree@gmail.com" method="GET">
           <div class="form-grid">
             <input type="text" name="name" id="name" placeholder="Name" class="form-element"/>
             <input type="email" name="email" id="email" placeholder="Email" class="form-element"/>
-            <textarea name="message" id="message" placeholder="Message" class="form-area"></textarea>
+            <textarea name="body" id="message" placeholder="Message" class="form-area"></textarea>
           </div>
 
           <div class="right-align">
-            <input type="submit" class="button" value="send message"/>
+            <input type="submit" class="button" value="Send message"/>
           </div>
 
         </form>
       </div>
-
     </section>
+
+    <footer style="background:#1a0a29; color:#f3f3f3; padding:32px 0; text-align:center;">
+      <div class="container">
+        <p style="font-weight:100; font-size:16px;">
+          &copy; 2026 Tek Jones &nbsp;&bull;&nbsp;
+          <a href="mailto:Tekthree@gmail.com" style="color:#fffc67; text-decoration:none;">Tekthree@gmail.com</a>
+          &nbsp;&bull;&nbsp;
+          <a href="https://github.com/Tekthree" style="color:#fffc67; text-decoration:none;">GitHub</a>
+        </p>
+      </div>
+    </footer>
 
   </main>
   <script src="./assets/js/main.js"></script>
