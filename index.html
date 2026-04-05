@@ -82,6 +82,21 @@
       .hamburger { display: flex; }
     }
 
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
     /* Tech stack section */
     .stack {
       background: #f3f3f3;
@@ -188,9 +203,9 @@
         <h2>Services</h2>
         <div class="services-grid">
 
-          <div class="services">
+          <div class="services reveal reveal-delay-1">
             <figure class="img-box">
-              <img src="./assets/img/greenworks_postcard_back.jpg" alt="Website design sample" class="img">
+              <img src="./assets/img/greenworks_postcard_back.jpg" alt="Website design sample" class="img" loading="lazy">
             </figure>
             <div class="content">
               <h3>Websites</h3>
@@ -198,9 +213,9 @@
             </div>
           </div>
 
-          <div class="services">
+          <div class="services reveal reveal-delay-2">
             <figure class="img-box">
-              <img src="./assets/img/plunk.jpg" alt="App development sample" class="img">
+              <img src="./assets/img/plunk.jpg" alt="App development sample" class="img" loading="lazy">
             </figure>
             <div class="content">
               <h3>Apps</h3>
@@ -208,9 +223,9 @@
             </div>
           </div>
 
-          <div class="services">
+          <div class="services reveal reveal-delay-3">
             <figure class="img-box">
-              <img src="./assets/img/siriusmockup.jpg" alt="Branding and graphic design sample" class="img">
+              <img src="./assets/img/siriusmockup.jpg" alt="Branding and graphic design sample" class="img" loading="lazy">
             </figure>
             <div class="content">
               <h3>Branding</h3>
@@ -218,9 +233,9 @@
             </div>
           </div>
 
-          <div class="services">
+          <div class="services reveal reveal-delay-4">
             <figure class="img-box">
-              <img src="./assets/img/promo_package_the breakfast club.jpg" alt="Webflow site sample" class="img">
+              <img src="./assets/img/promo_package_the breakfast club.jpg" alt="Webflow site sample" class="img" loading="lazy">
             </figure>
             <div class="content">
               <h3>Webflow</h3>
@@ -260,11 +275,11 @@
 
         <div class="projects-grid">
 
-          <div class="project" style="background-image:url('./assets/img/team_hero_background.jpg')">
+          <div class="project" style="background-image:url('./assets/img/jo-screenshot.jpg')">
             <div class="content">
               <h3>Jo Hearts Hair</h3>
-              <p>Hair extension salon site with booking integration, service pages, and a full client portal for ongoing updates.</p>
-              <a href="#" class="button">Learn more</a>
+              <p>Full brand identity and Webflow site for a hair extension salon in Denver. SEO, Google Ads, and ongoing digital marketing.</p>
+              <a href="https://joheartshair.com" class="button" target="_blank" rel="noopener">View site</a>
             </div>
           </div>
 
@@ -284,19 +299,19 @@
             </div>
           </div>
 
-          <div class="project" style="background-image:url('./assets/img/promo_package_the%20breakfast%20club.jpg')">
+          <div class="project" style="background-image:url('./assets/img/shameless-screenshot.jpg')">
             <div class="content">
               <h3>Shameless Productions</h3>
-              <p>Event brand site for a Seattle-based collective. Covers shows, artists, and ticket sales.</p>
+              <p>Event brand site for a Seattle-based collective. WordPress build covering shows, artists, and ongoing event media.</p>
               <a href="https://simplyshameless.com" class="button" target="_blank" rel="noopener">View site</a>
             </div>
           </div>
 
-          <div class="project" style="background-image:url('./assets/img/greenworks_postcard_back.jpg')">
+          <div class="project" style="background-image:url('./assets/img/craig-screenshot.jpg')">
             <div class="content">
               <h3>Craig DeBolt Realty</h3>
-              <p>Real estate portfolio site for a Seattle agent. Clean, professional, and built to generate leads.</p>
-              <a href="#" class="button">Learn more</a>
+              <p>Webflow site for a Denver real estate agent. Full SEO setup, Calendly integration, and copy written to convert leads.</p>
+              <a href="https://craigdebolt.com" class="button" target="_blank" rel="noopener">View site</a>
             </div>
           </div>
 
@@ -349,6 +364,17 @@
 
   <script src="./assets/js/main.js"></script>
   <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
 
