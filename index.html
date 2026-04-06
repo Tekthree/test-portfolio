@@ -52,8 +52,8 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      z-index: 2;
-      opacity: 0.045;
+      z-index: 3;
+      opacity: 0.04;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 256px;
     }
@@ -142,18 +142,34 @@
     /* ============================================================
        HERO ENHANCEMENTS
     ============================================================ */
-    .hero-gradient {
+
+    /* Override main.css gold background */
+    .banner {
+      background-color: #05010b !important;
+    }
+
+    /* Base dark overlay — ensures text readability over the Spline iframe */
+    .hero-overlay-base {
       position: absolute;
       inset: 0;
       z-index: 1;
       background:
-        radial-gradient(ellipse 65% 75% at 72% 50%, rgba(99,40,148,0.5) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 40% at 18% 80%, rgba(39,16,65,0.7) 0%, transparent 55%);
-      animation: heroShift 12s ease-in-out infinite alternate;
+        linear-gradient(90deg, rgba(5,1,11,0.88) 0%, rgba(5,1,11,0.6) 45%, rgba(5,1,11,0.1) 100%),
+        linear-gradient(to top, rgba(5,1,11,0.7) 0%, transparent 50%);
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        radial-gradient(ellipse 55% 65% at 75% 45%, rgba(110,50,200,0.4) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 50% at 15% 75%, rgba(80,20,150,0.35) 0%, transparent 55%);
+      animation: heroShift 14s ease-in-out infinite alternate;
     }
     @keyframes heroShift {
-      from { opacity: 0.85; transform: scale(1); }
-      to   { opacity: 1;    transform: scale(1.06); }
+      from { opacity: 0.8; transform: scale(1); }
+      to   { opacity: 1;   transform: scale(1.05); }
     }
 
     .hero-eyebrow {
@@ -716,6 +732,7 @@
 
     <!-- HERO -->
     <section class="banner">
+      <div class="hero-overlay-base"></div>
       <div class="hero-gradient"></div>
       <div class="noise-overlay"></div>
       <div class="container" style="position:relative; z-index:3;">
