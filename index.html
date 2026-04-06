@@ -289,16 +289,31 @@
       display: inline-block;
       color: var(--color-accent);
       font-family: var(--font-body);
-      font-weight: 900;
-      font-size: 18px;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
       text-decoration: none;
       text-transform: uppercase;
-      border: 2px solid var(--color-accent);
-      padding: 18px 30px;
-      border-radius: 8px;
-      transition: background 0.3s var(--ease), color 0.3s var(--ease);
+      border: 1.5px solid rgba(255,232,77,0.5);
+      padding: 14px 28px;
+      border-radius: 4px;
+      transition: background 0.25s var(--ease), border-color 0.25s var(--ease), color 0.25s var(--ease);
     }
-    .btn-outline:hover { background: var(--color-accent); color: var(--color-bg-mid); }
+    .btn-outline:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-bg-mid);
+    }
+
+    /* Match .button size to outline buttons in about section */
+    .about-btns .button {
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      padding: 14px 28px;
+      border-radius: 4px;
+      font-weight: 700;
+      margin-top: 0;
+    }
 
     /* ============================================================
        SERVICES SECTION
