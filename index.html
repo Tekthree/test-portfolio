@@ -21,14 +21,46 @@
   <meta name="twitter:description" content="Full-stack development and design out of Seattle. 15+ years building websites, apps, and brands.">
 
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="stylesheet" href="./assets/css/main.css">
 
   <style>
-    html { scroll-behavior: smooth; }
+    /* ============================================================
+       CSS CUSTOM PROPERTIES
+    ============================================================ */
+    :root {
+      --color-bg-deep:    #0f0519;
+      --color-bg-dark:    #1a0a29;
+      --color-bg-mid:     #271041;
+      --color-bg-header:  #250425;
+      --color-accent:     #fffc67;
+      --color-light:      #f3f3f3;
+      --color-muted:      #a89bbb;
+      --font-display:     'Dela Gothic One', cursive;
+      --font-body:        'Roboto', sans-serif;
+      --ease:             cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-    /* Hamburger button */
+    html { scroll-behavior: smooth; }
+    body { background: var(--color-bg-deep); }
+
+    /* ============================================================
+       NOISE TEXTURE OVERLAY
+    ============================================================ */
+    .noise-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px;
+    }
+
+    /* ============================================================
+       HAMBURGER + MOBILE NAV
+    ============================================================ */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -45,7 +77,7 @@
       display: block;
       width: 100%;
       height: 2px;
-      background: #f3f3f3;
+      background: var(--color-light);
       transition: 0.3s;
       border-radius: 2px;
     }
@@ -53,15 +85,12 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-    /* Mobile nav overlay */
     .mobile-nav {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #1a0a29;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--color-bg-deep);
       z-index: 100;
       flex-direction: column;
       align-items: center;
@@ -70,74 +99,585 @@
     }
     .mobile-nav.open { display: flex; }
     .mobile-nav a {
-      color: #f3f3f3;
+      color: var(--color-light);
       font-size: 32px;
       text-decoration: none;
       text-transform: uppercase;
-      font-family: 'Dela Gothic One', cursive;
+      font-family: var(--font-display);
+      transition: color 0.2s;
     }
-    .mobile-nav a:hover { color: #fffc67; }
+    .mobile-nav a:hover { color: var(--color-accent); }
 
-    @media (max-width: 767px) {
-      .hamburger { display: flex; }
-    }
+    @media (max-width: 767px) { .hamburger { display: flex; } }
 
-    /* Scroll reveal */
+    /* ============================================================
+       SCROLL REVEAL
+    ============================================================ */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
 
-    /* Tech stack section */
-    .stack {
-      background: #f3f3f3;
-      padding: 80px 0;
+    /* ============================================================
+       SECTION LABEL (eyebrow text)
+    ============================================================ */
+    .section-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 10px;
+    }
+    .section-label-dark { color: var(--color-bg-mid); opacity: 0.45; }
+
+    /* ============================================================
+       HERO ENHANCEMENTS
+    ============================================================ */
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 65% 75% at 72% 50%, rgba(99,40,148,0.5) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 18% 80%, rgba(39,16,65,0.7) 0%, transparent 55%);
+      animation: heroShift 12s ease-in-out infinite alternate;
+    }
+    @keyframes heroShift {
+      from { opacity: 0.85; transform: scale(1); }
+      to   { opacity: 1;    transform: scale(1.06); }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 22px;
+      color: var(--color-muted);
+      margin-top: 4px;
+      margin-bottom: 40px;
+      letter-spacing: 0.2px;
+    }
+    @media (max-width: 767px) { .hero-subtitle { font-size: 18px; } }
+
+    /* ============================================================
+       MARQUEE TICKER STRIP
+    ============================================================ */
+    .marquee-strip {
+      background: var(--color-accent);
+      overflow: hidden;
+      padding: 15px 0;
+    }
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 24s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      font-family: var(--font-display);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--color-bg-mid);
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+    .marquee-item::after { content: ' ·'; margin-left: 4px; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ============================================================
+       ABOUT SECTION
+    ============================================================ */
+    .about-section {
+      background: var(--color-bg-mid);
+      color: var(--color-light);
+      padding: 128px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-section::before {
+      content: 'TEK';
+      position: absolute;
+      right: -0.05em;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(120px, 18vw, 260px);
+      color: rgba(255,252,103,0.04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .about-inner {
+      max-width: 900px;
+      text-align: center;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .about-inner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 52px);
+      text-transform: uppercase;
+      color: var(--color-accent) !important;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    .about-inner p {
+      font-size: 19px;
+      font-weight: 300;
+      line-height: 1.8;
+      max-width: 680px;
+      margin: 0 auto 40px;
+      color: rgba(243,243,243,0.82);
+    }
+    .about-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-outline {
+      display: inline-block;
+      color: var(--color-accent);
+      font-family: var(--font-body);
+      font-weight: 900;
+      font-size: 18px;
+      text-decoration: none;
+      text-transform: uppercase;
+      border: 2px solid var(--color-accent);
+      padding: 18px 30px;
+      border-radius: 8px;
+      transition: background 0.3s var(--ease), color 0.3s var(--ease);
+    }
+    .btn-outline:hover { background: var(--color-accent); color: var(--color-bg-mid); }
+
+    /* ============================================================
+       SERVICES SECTION
+    ============================================================ */
+    .services-section {
+      background: #ede9e4;
+      padding: 128px 0;
+    }
+    .services-section h2 {
+      color: var(--color-bg-mid) !important;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+    @media (max-width: 767px)  { .services-grid { grid-template-columns: 1fr; gap: 20px; } }
+
+    .service-card {
+      background: #fff;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(39,16,65,0.07);
+      position: relative;
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 52px rgba(39,16,65,0.16);
+    }
+    /* Left accent bar slides up on hover */
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--color-accent);
+      transition: height 0.4s var(--ease);
+      z-index: 2;
+    }
+    .service-card:hover::before { height: 100%; }
+    /* Bottom accent border */
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.35s var(--ease);
+    }
+    .service-card:hover::after { background: var(--color-bg-mid); }
+
+    .service-number {
+      position: absolute;
+      top: 12px; right: 14px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: rgba(39,16,65,0.2);
+      z-index: 2;
+    }
+    .service-img-wrap {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+    }
+    .service-img {
+      display: block;
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      transition: transform 0.55s var(--ease);
+    }
+    .service-card:hover .service-img { transform: scale(1.05); }
+
+    .service-content { padding: 18px 20px 24px; }
+    .service-tag {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--color-bg-mid);
+      background: rgba(39,16,65,0.08);
+      padding: 4px 10px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+    .service-content h3 {
+      font-family: var(--font-display);
+      font-size: 21px;
+      color: var(--color-bg-mid);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .service-content p {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: #5a4a6a;
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       TECH STACK SECTION
+    ============================================================ */
+    .stack-section {
+      background: var(--color-bg-deep);
+      padding: 96px 0;
       text-align: center;
     }
+    .stack-section h2 { color: var(--color-light) !important; }
     .stack-tags {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 12px;
-      margin-top: 32px;
-      max-width: 800px;
+      gap: 10px;
+      margin-top: 40px;
+      max-width: 860px;
       margin-left: auto;
       margin-right: auto;
     }
     .stack-tag {
-      background: #271041;
-      color: #fffc67;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 15px;
+      background: transparent;
+      color: var(--color-accent);
+      padding: 9px 18px;
+      border-radius: 3px;
+      font-family: var(--font-body);
+      font-size: 12px;
       font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,252,103,0.28);
+      transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+      cursor: default;
+    }
+    .stack-tag:hover {
+      background: rgba(255,252,103,0.08);
+      border-color: var(--color-accent);
+    }
+
+    /* ============================================================
+       PROJECTS SECTION
+    ============================================================ */
+    .projects-section {
+      background: var(--color-bg-dark);
+      padding: 128px 0;
+    }
+    .projects-section h2 { color: var(--color-light) !important; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 1024px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px)  { .projects-grid { grid-template-columns: 1fr; } }
+
+    .project-card {
+      background-position: center;
+      background-size: cover;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      min-height: 280px;
+    }
+    /* Always-visible title bar */
+    .project-title-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(15,5,25,0.95) 0%, rgba(15,5,25,0.45) 55%, transparent 100%);
+      padding: 48px 20px 18px;
+      z-index: 2;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover .project-title-bar { opacity: 0; }
+    .project-title-bar h3 {
+      font-family: var(--font-display);
+      font-size: 19px;
+      color: var(--color-light);
+      margin: 0;
+      text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    /* About section */
-    .about-btns { margin-top: 32px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .about-btns .button { margin-top: 0; }
-    .about-btns .btn-outline {
-      display: inline-block;
-      margin-top: 0;
-      color: #fffc67;
-      font-weight: 900;
-      text-decoration: none;
-      text-transform: uppercase;
-      border: 2px solid #fffc67;
-      padding: 18px 30px;
-      border-radius: 8px;
-      font-size: 20px;
+    /* Hover overlay slides up */
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(39,16,65,0.97) 0%, rgba(39,16,65,0.88) 55%, rgba(39,16,65,0.65) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px 24px 28px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+      z-index: 3;
     }
+    .project-card:hover .project-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .project-overlay h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--color-accent);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .project-overlay p {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: rgba(243,243,243,0.78);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .project-overlay .button {
+      font-size: 13px;
+      padding: 12px 24px;
+      margin-top: 0;
+      align-self: flex-start;
+    }
+
+    /* ============================================================
+       CONTACT SECTION
+    ============================================================ */
+    .contact-section {
+      background: var(--color-bg-mid);
+      padding: 128px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-section::before {
+      content: 'CONTACT';
+      position: absolute;
+      left: -0.04em;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(80px, 14vw, 200px);
+      color: rgba(255,252,103,0.03);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .contact-section h2 { color: var(--color-light) !important; }
+
+    .contact-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .contact-subtext {
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--color-muted);
+      margin: -12px 0 44px;
+    }
+    .contact-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    @media (max-width: 767px) { .contact-form-grid { grid-template-columns: 1fr; } }
+
+    .contact-input, .contact-textarea {
+      appearance: none;
+      border: none;
+      outline: none;
+      display: block;
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 16px 20px;
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--color-light);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .contact-input::placeholder, .contact-textarea::placeholder { color: var(--color-muted); }
+    .contact-input:focus, .contact-textarea:focus {
+      border-color: var(--color-accent);
+      background: rgba(255,252,103,0.04);
+    }
+    .contact-textarea {
+      grid-column: 1 / -1;
+      min-height: 140px;
+      resize: vertical;
+    }
+    .contact-submit-row { text-align: right; margin-top: 4px; }
+    .contact-submit-row .button { margin-top: 0; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .site-footer {
+      background: var(--color-bg-deep);
+      padding: 72px 0 32px;
+      border-top: 1px solid rgba(255,252,103,0.07);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 56px;
+    }
+    @media (max-width: 767px) { .footer-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--color-light);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .footer-brand-name span { color: var(--color-accent); }
+    .footer-brand-desc {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--color-muted);
+      line-height: 1.65;
+    }
+
+    .footer-col-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 18px;
+    }
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links-list a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links-list a:hover { color: var(--color-light); }
+
+    .footer-connect-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-connect-list a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-connect-list a:hover { color: var(--color-accent); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom-copy {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(168,155,187,0.5);
+    }
+    .footer-bottom-brand {
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(168,155,187,0.3);
+    }
+
+    @media (max-width: 767px) { .hide-mob { display: none; } }
   </style>
 
   <title>Tek Jones | Full-Stack Developer & Designer</title>
@@ -157,11 +697,11 @@
     <div class="container">
       <h2><span>TEKKY</span>JONES</h2>
       <nav>
-          <a href="#">Home</a>
-          <a href="#services">Services</a>
-          <a href="#stack">Stack</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#stack">Stack</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Open menu">
         <span></span>
@@ -172,72 +712,122 @@
   </header>
 
   <main>
+
+    <!-- HERO -->
     <section class="banner">
-      <div class="container">
+      <div class="hero-gradient"></div>
+      <div class="noise-overlay"></div>
+      <div class="container" style="position:relative; z-index:3;">
+        <p class="hero-eyebrow">Available for Work &mdash; Seattle, WA</p>
         <h1>
           Websites you're <br class="hide-mob"/>
-          <span>Not Scared </span>to share
+          <span>Not Scared</span> to share
         </h1>
-        <h3>Full-stack development and design out of Seattle</h3>
+        <p class="hero-subtitle">Full-stack development and design out of Seattle</p>
         <a href="#services" class="button">See what I do</a>
       </div>
-      <iframe class='background3d' src='https://my.spline.design/librarygrogu-c57791ad17b7a6a81127f6abaaf25b62/' frameborder='0' width='100%' height='100%'></iframe>
+      <iframe class="background3d" src="https://my.spline.design/librarygrogu-c57791ad17b7a6a81127f6abaaf25b62/" frameborder="0" width="100%" height="100%"></iframe>
     </section>
 
-    <section id="about" style="background:#271041; color:#f3f3f3; padding:96px 0;">
-      <div class="container" style="max-width:900px; text-align:center;">
-        <h2 style="color:#fffc67;">About</h2>
-        <p style="font-size:20px; font-weight:100; line-height:1.7; max-width:680px; margin:0 auto;">
-          I'm Tek Jones, a full-stack developer and designer with 15+ years building web solutions for businesses of all sizes. Air Force vet, Code Fellows alum, solo operator behind Pixel Jones. I handle everything from branding to deployed app, so you deal with one person the whole way through.
-        </p>
-        <div class="about-btns">
-          <a href="#contact" class="button">Work with me</a>
-          <a href="https://github.com/Tekthree" class="btn-outline" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.linkedin.com/in/ryan-jones-54b39562" class="btn-outline" target="_blank" rel="noopener">LinkedIn</a>
+    <!-- MARQUEE TICKER -->
+    <div class="marquee-strip">
+      <div class="marquee-track">
+        <span class="marquee-item">Web Design</span>
+        <span class="marquee-item">Full-Stack Dev</span>
+        <span class="marquee-item">React</span>
+        <span class="marquee-item">Next.js</span>
+        <span class="marquee-item">Branding</span>
+        <span class="marquee-item">Webflow</span>
+        <span class="marquee-item">Node.js</span>
+        <span class="marquee-item">Supabase</span>
+        <span class="marquee-item">Figma</span>
+        <span class="marquee-item">Seattle</span>
+        <span class="marquee-item">TypeScript</span>
+        <span class="marquee-item">Pixel Jones</span>
+        <!-- duplicate for seamless loop -->
+        <span class="marquee-item">Web Design</span>
+        <span class="marquee-item">Full-Stack Dev</span>
+        <span class="marquee-item">React</span>
+        <span class="marquee-item">Next.js</span>
+        <span class="marquee-item">Branding</span>
+        <span class="marquee-item">Webflow</span>
+        <span class="marquee-item">Node.js</span>
+        <span class="marquee-item">Supabase</span>
+        <span class="marquee-item">Figma</span>
+        <span class="marquee-item">Seattle</span>
+        <span class="marquee-item">TypeScript</span>
+        <span class="marquee-item">Pixel Jones</span>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="about-section">
+      <div class="container">
+        <div class="about-inner reveal">
+          <span class="section-label">About</span>
+          <h2>15+ Years<br>Building on the Web</h2>
+          <p>
+            I'm Tek Jones, a full-stack developer and designer with 15+ years building web solutions for businesses of all sizes. Air Force vet, Code Fellows alum, solo operator behind Pixel Jones. I handle everything from branding to deployed app, so you deal with one person the whole way through.
+          </p>
+          <div class="about-btns">
+            <a href="#contact" class="button">Work with me</a>
+            <a href="https://github.com/Tekthree" class="btn-outline" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/ryan-jones-54b39562" class="btn-outline" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="services" class="services">
+    <!-- SERVICES -->
+    <section id="services" class="services-section">
       <div class="container">
+        <span class="section-label section-label-dark">What I do</span>
         <h2>Services</h2>
         <div class="services-grid">
 
-          <div class="services reveal reveal-delay-1">
-            <figure class="img-box">
-              <img src="./assets/img/greenworks_postcard_back.jpg" alt="Website design sample" class="img" loading="lazy">
+          <div class="service-card reveal reveal-delay-1">
+            <span class="service-number">01</span>
+            <figure class="service-img-wrap">
+              <img src="./assets/img/greenworks_postcard_back.jpg" alt="Website design sample" class="service-img" loading="lazy">
             </figure>
-            <div class="content">
+            <div class="service-content">
+              <span class="service-tag">Web</span>
               <h3>Websites</h3>
               <p>Custom websites for small businesses and brands. Built to look sharp and convert visitors into clients.</p>
             </div>
           </div>
 
-          <div class="services reveal reveal-delay-2">
-            <figure class="img-box">
-              <img src="./assets/img/plunk.jpg" alt="App development sample" class="img" loading="lazy">
+          <div class="service-card reveal reveal-delay-2">
+            <span class="service-number">02</span>
+            <figure class="service-img-wrap">
+              <img src="./assets/img/plunk.jpg" alt="App development sample" class="service-img" loading="lazy">
             </figure>
-            <div class="content">
+            <div class="service-content">
+              <span class="service-tag">Apps</span>
               <h3>Apps</h3>
               <p>Full-stack web apps using React and Next.js. From dashboards to data-driven tools built to scale.</p>
             </div>
           </div>
 
-          <div class="services reveal reveal-delay-3">
-            <figure class="img-box">
-              <img src="./assets/img/siriusmockup.jpg" alt="Branding and graphic design sample" class="img" loading="lazy">
+          <div class="service-card reveal reveal-delay-3">
+            <span class="service-number">03</span>
+            <figure class="service-img-wrap">
+              <img src="./assets/img/siriusmockup.jpg" alt="Branding and graphic design sample" class="service-img" loading="lazy">
             </figure>
-            <div class="content">
+            <div class="service-content">
+              <span class="service-tag">Design</span>
               <h3>Branding</h3>
               <p>Logos, identity systems, and event graphics. From first impression to full visual language.</p>
             </div>
           </div>
 
-          <div class="services reveal reveal-delay-4">
-            <figure class="img-box">
-              <img src="./assets/img/promo_package_the breakfast club.jpg" alt="Webflow site sample" class="img" loading="lazy">
+          <div class="service-card reveal reveal-delay-4">
+            <span class="service-number">04</span>
+            <figure class="service-img-wrap">
+              <img src="./assets/img/promo_package_the breakfast club.jpg" alt="Webflow site sample" class="service-img" loading="lazy">
             </figure>
-            <div class="content">
+            <div class="service-content">
+              <span class="service-tag">No-Code</span>
               <h3>Webflow</h3>
               <p>Fast, polished Webflow sites for clients who need something live quickly without sacrificing quality.</p>
             </div>
@@ -247,8 +837,10 @@
       </div>
     </section>
 
-    <section id="stack" class="stack">
+    <!-- TECH STACK -->
+    <section id="stack" class="stack-section">
       <div class="container">
+        <span class="section-label">Tools &amp; Technologies</span>
         <h2>Tech Stack</h2>
         <div class="stack-tags">
           <span class="stack-tag">React</span>
@@ -269,54 +861,74 @@
       </div>
     </section>
 
-    <section class="projects" id="projects">
+    <!-- PROJECTS -->
+    <section class="projects-section" id="projects">
       <div class="container">
+        <span class="section-label">Selected Work</span>
         <h2>Projects</h2>
 
         <div class="projects-grid">
 
-          <div class="project" style="background-image:url('./assets/img/jo-screenshot.jpg')">
-            <div class="content">
+          <div class="project-card reveal reveal-delay-1" style="background-image:url('./assets/img/jo-screenshot.jpg')">
+            <div class="project-title-bar">
+              <h3>Jo Hearts Hair</h3>
+            </div>
+            <div class="project-overlay">
               <h3>Jo Hearts Hair</h3>
               <p>Full brand identity and Webflow site for a hair extension salon in Denver. SEO, Google Ads, and ongoing digital marketing.</p>
               <a href="https://joheartshair.com" class="button" target="_blank" rel="noopener">View site</a>
             </div>
           </div>
 
-          <div class="project" style="background-image:url('./assets/img/rebel-screenshot.jpg')">
-            <div class="content">
+          <div class="project-card reveal reveal-delay-2" style="background-image:url('./assets/img/rebel-screenshot.jpg')">
+            <div class="project-title-bar">
+              <h3>The Rebel</h3>
+            </div>
+            <div class="project-overlay">
               <h3>The Rebel</h3>
               <p>Bar and lounge website with event listings, press coverage, and Google Business Profile management.</p>
               <a href="https://therebelwallingford.com" class="button" target="_blank" rel="noopener">View site</a>
             </div>
           </div>
 
-          <div class="project" style="background-image:url('./assets/img/ink-therapy-screenshot.jpg')">
-            <div class="content">
+          <div class="project-card reveal reveal-delay-3" style="background-image:url('./assets/img/ink-therapy-screenshot.jpg')">
+            <div class="project-title-bar">
+              <h3>Ink Therapy Tattoo</h3>
+            </div>
+            <div class="project-overlay">
               <h3>Ink Therapy Tattoo</h3>
               <p>Tattoo studio site with artist profiles, service pages, and SEO-optimized content for local discovery.</p>
               <a href="https://inktherapytattoo.com" class="button" target="_blank" rel="noopener">View site</a>
             </div>
           </div>
 
-          <div class="project" style="background-image:url('./assets/img/shameless-screenshot.jpg')">
-            <div class="content">
+          <div class="project-card reveal reveal-delay-4" style="background-image:url('./assets/img/shameless-screenshot.jpg')">
+            <div class="project-title-bar">
+              <h3>Shameless Productions</h3>
+            </div>
+            <div class="project-overlay">
               <h3>Shameless Productions</h3>
               <p>Event brand site for a Seattle-based collective. WordPress build covering shows, artists, and ongoing event media.</p>
               <a href="https://simplyshameless.com" class="button" target="_blank" rel="noopener">View site</a>
             </div>
           </div>
 
-          <div class="project" style="background-image:url('./assets/img/craig-screenshot.jpg')">
-            <div class="content">
+          <div class="project-card reveal reveal-delay-1" style="background-image:url('./assets/img/craig-screenshot.jpg')">
+            <div class="project-title-bar">
+              <h3>Craig DeBolt Realty</h3>
+            </div>
+            <div class="project-overlay">
               <h3>Craig DeBolt Realty</h3>
               <p>Webflow site for a Denver real estate agent. Full SEO setup, Calendly integration, and copy written to convert leads.</p>
               <a href="https://craigdebolt.com" class="button" target="_blank" rel="noopener">View site</a>
             </div>
           </div>
 
-          <div class="project" style="background-image:url('./assets/img/plunk.jpg')">
-            <div class="content">
+          <div class="project-card reveal reveal-delay-2" style="background-image:url('./assets/img/plunk.jpg')">
+            <div class="project-title-bar">
+              <h3>OkizooCrew</h3>
+            </div>
+            <div class="project-overlay">
               <h3>OkizooCrew</h3>
               <p>React migration for an online music community. Modernized the stack while keeping the community intact.</p>
               <a href="#" class="button">Learn more</a>
@@ -324,39 +936,69 @@
           </div>
 
         </div>
-
       </div>
     </section>
 
-    <section class="contact" id="contact">
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
       <div class="container">
-        <h2>Contact</h2>
-
-        <form action="mailto:Tekthree@gmail.com" method="GET" enctype="text/plain">
-          <div class="form-grid">
-            <input type="text" name="name" id="name" placeholder="Name" class="form-element"/>
-            <input type="email" name="email" id="email" placeholder="Email" class="form-element"/>
-            <textarea name="body" id="message" placeholder="Message" class="form-area"></textarea>
-          </div>
-
-          <div class="right-align">
-            <input type="submit" class="button" value="Send message"/>
-          </div>
-
-        </form>
+        <div class="contact-inner">
+          <span class="section-label" style="text-align:center;">Get in touch</span>
+          <h2 style="text-align:center; margin-bottom:8px;">Contact</h2>
+          <p class="contact-subtext">Have a project in mind? Let's talk about it.</p>
+          <form action="mailto:Tekthree@gmail.com" method="GET" enctype="text/plain">
+            <div class="contact-form-grid">
+              <input type="text" name="name" id="name" placeholder="Name" class="contact-input"/>
+              <input type="email" name="email" id="email" placeholder="Email" class="contact-input"/>
+              <textarea name="body" id="message" placeholder="Message" class="contact-textarea"></textarea>
+            </div>
+            <div class="contact-submit-row">
+              <input type="submit" class="button" value="Send message"/>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
-    <footer style="background:#1a0a29; color:#f3f3f3; padding:32px 0; text-align:center;">
+    <!-- FOOTER -->
+    <footer class="site-footer">
       <div class="container">
-        <p style="font-weight:100; font-size:16px;">
-          &copy; 2026 Tek Jones &nbsp;&bull;&nbsp;
-          <a href="mailto:Tekthree@gmail.com" style="color:#fffc67; text-decoration:none;">Tekthree@gmail.com</a>
-          &nbsp;&bull;&nbsp;
-          <a href="https://github.com/Tekthree" style="color:#fffc67; text-decoration:none;" target="_blank" rel="noopener">GitHub</a>
-          &nbsp;&bull;&nbsp;
-          <a href="https://www.linkedin.com/in/ryan-jones-54b39562" style="color:#fffc67; text-decoration:none;" target="_blank" rel="noopener">LinkedIn</a>
-        </p>
+        <div class="footer-grid">
+
+          <div class="footer-brand">
+            <p class="footer-brand-name"><span>TEKKY</span>JONES</p>
+            <p class="footer-brand-desc">
+              Full-stack developer and designer.<br>
+              Pixel Jones &mdash; Seattle, WA
+            </p>
+          </div>
+
+          <div class="footer-nav">
+            <span class="footer-col-label">Navigation</span>
+            <ul class="footer-links-list">
+              <li><a href="#">Home</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#stack">Stack</a></li>
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-connect">
+            <span class="footer-col-label">Connect</span>
+            <div class="footer-connect-list">
+              <a href="mailto:Tekthree@gmail.com">Tekthree@gmail.com</a>
+              <a href="https://github.com/Tekthree" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://www.linkedin.com/in/ryan-jones-54b39562" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-bottom-copy">&copy; 2026 Tek Jones. All rights reserved.</p>
+          <span class="footer-bottom-brand">Pixel Jones</span>
+        </div>
       </div>
     </footer>
 
@@ -375,15 +1017,14 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+    // Mobile nav
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
-
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('open');
       mobileNav.classList.toggle('open');
       document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
     });
-
     function closeNav() {
       hamburger.classList.remove('open');
       mobileNav.classList.remove('open');
